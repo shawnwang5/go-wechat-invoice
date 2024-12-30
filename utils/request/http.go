@@ -78,7 +78,7 @@ func HttpRequest[T any](
 // 发送 form 请求
 func PostForm[T any](
 	urlStr string,
-	data map[string]interface{}) (res *T, err error) {
+	data map[string]string) (res *T, err error) {
 	formData := url.Values{}
 	for k, v := range data {
 		formData.Set(k, v)

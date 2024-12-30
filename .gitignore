@@ -1,6 +1,6 @@
 .hbuilderx/
 .idea/
-# .vscode/
+.vscode/
 
 .DS_Store
 
