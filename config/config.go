@@ -1,4 +1,4 @@
-package officialaccount
+package config
 
 const (
 	// 访问接口的基础 url
