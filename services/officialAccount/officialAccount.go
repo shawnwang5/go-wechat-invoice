@@ -1,11 +1,11 @@
 package officialaccount
 
 import (
+	"go-wechat-invoice/config"
+	officialAccountModel "go-wechat-invoice/model/officialAccount"
+	"go-wechat-invoice/utils"
+	requestUtils "go-wechat-invoice/utils/request"
 	"net/http"
-	"wechat-invoice/config"
-	officialAccountModel "wechat-invoice/model/officialAccount"
-	"wechat-invoice/utils"
-	requestUtils "wechat-invoice/utils/request"
 )
 
 const (
