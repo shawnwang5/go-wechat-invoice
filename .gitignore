@@ -1,0 +1,18 @@
+.hbuilderx/
+.idea/
+# .vscode/
+
+.DS_Store
+
+# local env files
+.env.local
+.env.*.local
+
+*.local
+
+*.log
+
+__debug_*
+
+# Test files
+*.test
