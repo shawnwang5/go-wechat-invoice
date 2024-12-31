@@ -4,7 +4,7 @@ import "os"
 
 // 获取预开票 URL 的响应数据
 type GetPreInvoicingUrlRes struct {
-	Errcode    string `json:"errcode" mapstructure:"errcode"`         // 错误码
+	Errcode    int    `json:"errcode" mapstructure:"errcode"`         // 错误码
 	Errmsg     string `json:"errmsg" mapstructure:"errmsg"`           // 错误信息
 	InvoiceUrl string `json:"invoice_url" mapstructure:"invoice_url"` // 该开票平台专用的授权链接。开票平台须将 invoice_url 内的 s_pappid 给到服务的商户，商户在请求授权链接时会向微信传入该参数，标识所使用的开票平台是哪家
 }
@@ -18,7 +18,7 @@ type SetMerchantContactReq struct {
 	Contact SetMerchantContactReqContact `json:"contact" mapstructure:"contact"` // 联系方式信息
 }
 type SetMerchantContactRes struct {
-	Errcode string `json:"errcode" mapstructure:"errcode"` // 错误码
+	Errcode int    `json:"errcode" mapstructure:"errcode"` // 错误码
 	Errmsg  string `json:"errmsg" mapstructure:"errmsg"`   // 错误信息
 }
 
@@ -28,7 +28,7 @@ type QueryMerchantContactResContact struct {
 	Phone   string `json:"phone" mapstructure:"phone"`       // 联系电话
 }
 type QueryMerchantContactRes struct {
-	Errcode string                         `json:"errcode" mapstructure:"errcode"` // 错误码
+	Errcode int                            `json:"errcode" mapstructure:"errcode"` // 错误码
 	Errmsg  string                         `json:"errmsg" mapstructure:"errmsg"`   // 错误信息
 	Contact QueryMerchantContactResContact `json:"contact" mapstructure:"contact"` // 联系方式信息
 }
@@ -115,7 +115,7 @@ type CreateInvoiceCardTemplateReq struct {
 	InvoiceInfo CreateInvoiceCardTemplateReqInvoiceInfo `json:"invoice_info" mapstructure:"invoice_info"` // 发票模板对象
 }
 type CreateInvoiceCardTemplateRes struct {
-	Errcode string `json:"errcode" mapstructure:"errcode"` // 错误码
+	Errcode int    `json:"errcode" mapstructure:"errcode"` // 错误码
 	Errmsg  string `json:"errmsg" mapstructure:"errmsg"`   // 错误信息
 	CardId  string `json:"card_id" mapstructure:"card_id"` // 当错误码为 0 时，返回发票卡券模板的编号，用于后续该商户发票生成后，作为必填参数在调用插卡接口时传入
 }
