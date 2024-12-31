@@ -5,8 +5,8 @@ import (
 
 	"github.com/shawnwang5/go-wechat-invoice/config"
 	officialAccountModel "github.com/shawnwang5/go-wechat-invoice/model/officialAccount"
-	"github.com/shawnwang5/go-wechat-invoice/utils"
-	requestUtils "github.com/shawnwang5/go-wechat-invoice/utils/request"
+	maputils "github.com/shawnwang5/go-wechat-invoice/utils/map"
+	requestutils "github.com/shawnwang5/go-wechat-invoice/utils/request"
 )
 
 const (
@@ -27,7 +27,7 @@ func GetPreInvoicingUrl(accessToken string) (res *officialAccountModel.GetPreInv
 	headers := make(map[string]string)
 	params := make(map[string]string)
 	data := make(map[string]interface{})
-	res, err = requestUtils.HttpRequest[officialAccountModel.GetPreInvoicingUrlRes](url,
+	res, err = requestutils.HttpRequest[officialAccountModel.GetPreInvoicingUrlRes](url,
 		method,
 		headers,
 		params,
@@ -59,7 +59,7 @@ func SetMerchantContact(accessToken string, req officialAccountModel.SetMerchant
 	contact["time_out"] = req.Contact.TimeOut
 	contact["phone"] = req.Contact.Phone
 	data["contact"] = contact
-	res, err = requestUtils.HttpRequest[officialAccountModel.SetMerchantContactRes](url,
+	res, err = requestutils.HttpRequest[officialAccountModel.SetMerchantContactRes](url,
 		method,
 		headers,
 		params,
@@ -85,7 +85,7 @@ func QueryMerchantContact(accessToken string) (res *officialAccountModel.QueryMe
 	headers := make(map[string]string)
 	params := make(map[string]string)
 	data := make(map[string]interface{})
-	res, err = requestUtils.HttpRequest[officialAccountModel.QueryMerchantContactRes](url,
+	res, err = requestutils.HttpRequest[officialAccountModel.QueryMerchantContactRes](url,
 		method,
 		headers,
 		params,
@@ -111,7 +111,7 @@ func GetTicket(accessToken string) (res *officialAccountModel.GetTicketRes, err 
 	headers := make(map[string]string)
 	params := make(map[string]string)
 	data := make(map[string]interface{})
-	res, err = requestUtils.HttpRequest[officialAccountModel.GetTicketRes](url,
+	res, err = requestutils.HttpRequest[officialAccountModel.GetTicketRes](url,
 		method,
 		headers,
 		params,
@@ -137,8 +137,8 @@ func GetAuthUrl(accessToken string, req officialAccountModel.GetAuthUrlReq) (res
 	method := http.MethodPost
 	headers := make(map[string]string)
 	params := make(map[string]string)
-	data := utils.StructToMap(req)
-	res, err = requestUtils.HttpRequest[officialAccountModel.GetAuthUrlRes](url,
+	data := maputils.StructToMap(req)
+	res, err = requestutils.HttpRequest[officialAccountModel.GetAuthUrlRes](url,
 		method,
 		headers,
 		params,
@@ -164,8 +164,8 @@ func GetUserAuthStatus(accessToken string, req officialAccountModel.GetUserAuthS
 	method := http.MethodPost
 	headers := make(map[string]string)
 	params := make(map[string]string)
-	data := utils.StructToMap(req)
-	res, err = requestUtils.HttpRequest[officialAccountModel.GetUserAuthStatusRes](url,
+	data := maputils.StructToMap(req)
+	res, err = requestutils.HttpRequest[officialAccountModel.GetUserAuthStatusRes](url,
 		method,
 		headers,
 		params,
@@ -192,11 +192,11 @@ func CreateInvoiceCardTemplate(accessToken string, req officialAccountModel.Crea
 	headers := make(map[string]string)
 	params := make(map[string]string)
 	data := make(map[string]interface{})
-	dataBaseInfo := utils.StructToMap(req.InvoiceInfo.BaseInfo)
-	dataInvoiceInfo := utils.StructToMap(req.InvoiceInfo)
+	dataBaseInfo := maputils.StructToMap(req.InvoiceInfo.BaseInfo)
+	dataInvoiceInfo := maputils.StructToMap(req.InvoiceInfo)
 	dataInvoiceInfo["base_info"] = dataBaseInfo
 	data["invoice_info"] = dataInvoiceInfo
-	res, err = requestUtils.HttpRequest[officialAccountModel.CreateInvoiceCardTemplateRes](url,
+	res, err = requestutils.HttpRequest[officialAccountModel.CreateInvoiceCardTemplateRes](url,
 		method,
 		headers,
 		params,
@@ -225,7 +225,7 @@ func UploadInvoicePdf(accessToken string, req officialAccountModel.UploadInvoice
 	params := make(map[string]string)
 	data := make(map[string]interface{})
 	data["pdf"] = req.Pdf
-	res, err = requestUtils.HttpRequest[officialAccountModel.UploadInvoicePdfRes](url,
+	res, err = requestutils.HttpRequest[officialAccountModel.UploadInvoicePdfRes](url,
 		method,
 		headers,
 		params,
@@ -251,9 +251,9 @@ func QueryInvoicePdf(accessToken string, req officialAccountModel.QueryInvoicePd
 	method := http.MethodPost
 	headers := make(map[string]string)
 	params := make(map[string]string)
-	data := utils.StructToMap(req)
+	data := maputils.StructToMap(req)
 	data["action"] = "get_url"
-	res, err = requestUtils.HttpRequest[officialAccountModel.QueryInvoicePdfRes](url,
+	res, err = requestutils.HttpRequest[officialAccountModel.QueryInvoicePdfRes](url,
 		method,
 		headers,
 		params,
@@ -281,15 +281,15 @@ func InsertInvoiceToUserCard(accessToken string, req officialAccountModel.Insert
 	params := make(map[string]string)
 	dataUserCardInfoList := make([]map[string]interface{}, 0)
 	for _, item := range req.CardExt.UserCard.Info {
-		dataUserCardInfoList = append(dataUserCardInfoList, utils.StructToMap(item))
+		dataUserCardInfoList = append(dataUserCardInfoList, maputils.StructToMap(item))
 	}
-	dataUserCard := utils.StructToMap(req.CardExt.UserCard)
+	dataUserCard := maputils.StructToMap(req.CardExt.UserCard)
 	dataUserCard["info"] = dataUserCardInfoList
-	dataCardExt := utils.StructToMap(req.CardExt)
+	dataCardExt := maputils.StructToMap(req.CardExt)
 	dataCardExt["user_card"] = dataUserCard
-	data := utils.StructToMap(req)
+	data := maputils.StructToMap(req)
 	data["card_ext"] = dataCardExt
-	res, err = requestUtils.HttpRequest[officialAccountModel.InsertInvoiceToUserCardRes](url,
+	res, err = requestutils.HttpRequest[officialAccountModel.InsertInvoiceToUserCardRes](url,
 		method,
 		headers,
 		params,
@@ -315,8 +315,8 @@ func UpdateInvoiceStatus(accessToken string, req officialAccountModel.UpdateInvo
 	method := http.MethodPost
 	headers := make(map[string]string)
 	params := make(map[string]string)
-	data := utils.StructToMap(req)
-	res, err = requestUtils.HttpRequest[officialAccountModel.UpdateInvoiceStatusRes](url,
+	data := maputils.StructToMap(req)
+	res, err = requestutils.HttpRequest[officialAccountModel.UpdateInvoiceStatusRes](url,
 		method,
 		headers,
 		params,
@@ -342,8 +342,8 @@ func DecodeInvoiceCode(accessToken string, req officialAccountModel.DecodeInvoic
 	method := http.MethodPost
 	headers := make(map[string]string)
 	params := make(map[string]string)
-	data := utils.StructToMap(req)
-	res, err = requestUtils.HttpRequest[officialAccountModel.DecodeInvoiceCodeRes](url,
+	data := maputils.StructToMap(req)
+	res, err = requestutils.HttpRequest[officialAccountModel.DecodeInvoiceCodeRes](url,
 		method,
 		headers,
 		params,
