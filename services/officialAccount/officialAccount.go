@@ -133,7 +133,7 @@ func GetAuthTicket(accessToken string) (res *officialAccountModel.GetAuthTicketR
 //   - res: 响应数据
 //   - err: error
 func GetAuthUrl(accessToken string, req officialAccountModel.GetAuthUrlReq) (res *officialAccountModel.GetAuthUrlRes, err error) {
-	url := BASE_URL + "/card/invoice/setbizattr?action=set_contact&access_token=" + accessToken
+	url := BASE_URL + "/card/invoice/getauthurl?access_token=" + accessToken
 	method := http.MethodPost
 	headers := make(map[string]string)
 	params := make(map[string]string)
