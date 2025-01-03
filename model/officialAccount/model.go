@@ -11,7 +11,7 @@ type GetPreInvoicingUrlRes struct {
 
 // 设置商户联系方式
 type SetMerchantContactReqContact struct {
-	TimeOut int    `json:"time_out" mapstructure:"time_out"` // 开票超时时间
+	TimeOut int64  `json:"time_out" mapstructure:"time_out"` // 开票超时时间
 	Phone   string `json:"phone" mapstructure:"phone"`       // 联系电话
 }
 type SetMerchantContactReq struct {
@@ -24,7 +24,7 @@ type SetMerchantContactRes struct {
 
 // 查询商户联系方式
 type QueryMerchantContactResContact struct {
-	TimeOut int    `json:"time_out" mapstructure:"time_out"` // 开票超时时间
+	TimeOut int64  `json:"time_out" mapstructure:"time_out"` // 开票超时时间
 	Phone   string `json:"phone" mapstructure:"phone"`       // 联系电话
 }
 type QueryMerchantContactRes struct {
@@ -34,19 +34,19 @@ type QueryMerchantContactRes struct {
 }
 
 // 获取授权页 ticket
-type GetTicketRes struct {
+type GetAuthTicketRes struct {
 	Errcode   int    `json:"errcode" mapstructure:"errcode"`       // 错误码，含义见错误码
 	Errmsg    string `json:"errmsg" mapstructure:"errmsg"`         // 错误信息，含义见错误码
 	Ticket    string `json:"ticket" mapstructure:"ticket"`         // 临时票据，用于在获取授权链接时作为参数传入
-	ExpiresIn int    `json:"expires_in" mapstructure:"expires_in"` // ticket 的有效期，一般为 7200 秒
+	ExpiresIn int64  `json:"expires_in" mapstructure:"expires_in"` // ticket 的有效期，一般为 7200 秒
 }
 
 // 获取授权页链接
 type GetAuthUrlReq struct {
 	SPappId     string `json:"s_pappid" mapstructure:"s_pappid"`         // 开票平台在微信的标识号，商户需要找开票平台提供
 	OrderId     string `json:"order_id" mapstructure:"order_id"`         // 订单id，在商户内单笔开票请求的唯一识别号，
-	Money       int    `json:"money" mapstructure:"money"`               // 订单金额，以分为单位
-	Timestamp   int    `json:"timestamp" mapstructure:"timestamp"`       // 时间戳
+	Money       int64  `json:"money" mapstructure:"money"`               // 订单金额，以分为单位
+	Timestamp   int64  `json:"timestamp" mapstructure:"timestamp"`       // 时间戳
 	Source      string `json:"source" mapstructure:"source"`             // 开票来源，app：app开票，web：微信h5开票，wxa：小程序开发票，wap：普通网页开票
 	RedirectUrl string `json:"redirect_url" mapstructure:"redirect_url"` // 授权成功后跳转页面。本字段只有在source为H5的时候需要填写，引导用户在微信中进行下一步流程。app开票因为从外部app拉起微信授权页，授权完成后自动回到原来的app，故无需填写。
 	Ticket      string `json:"ticket" mapstructure:"ticket"`             // 从上一环节中获取
@@ -56,7 +56,7 @@ type GetAuthUrlRes struct {
 	Errcode int    `json:"errcode" mapstructure:"errcode"`   // 错误码
 	Errmsg  string `json:"errmsg" mapstructure:"errmsg"`     // 错误信息
 	AuthUrl string `json:"auth_url" mapstructure:"auth_url"` // 授权链接
-	AppId   string `json:"appid" mapstructure:"appid"`       // source为wxa时才有
+	AppId   string `json:"appid" mapstructure:"appid"`       // source为 wxa 时才有
 }
 
 // 查询用户授权完成状态
@@ -91,7 +91,7 @@ type GetUserAuthStatusRes struct {
 	Errcode       int                              `json:"errcode" mapstructure:"errcode"`               // 错误码
 	Errmsg        string                           `json:"errmsg" mapstructure:"errmsg"`                 // 错误信息
 	InvoiceStatus string                           `json:"invoice_status" mapstructure:"invoice_status"` // 订单授权状态，当errcode为0时会出现
-	AuthTime      int                              `json:"auth_time" mapstructure:"auth_time"`           // 授权时间，为十位时间戳（utc+8），当errcode为0时会出现
+	AuthTime      int64                            `json:"auth_time" mapstructure:"auth_time"`           // 授权时间，为十位时间戳（utc+8），当errcode为0时会出现
 	UserAuthInfo  GetUserAuthStatusResUserAuthInfo `json:"user_auth_info" mapstructure:"user_auth_info"` // 用户授权信息结构体，仅在授权页为type=1时出现
 }
 
@@ -138,25 +138,25 @@ type QueryInvoicePdfRes struct {
 	Errcode          int    `json:"errcode" mapstructure:"errcode"`                         // 错误码
 	Errmsg           string `json:"errmsg" mapstructure:"errmsg"`                           // 错误信息
 	PdfUrl           string `json:"pdf_url" mapstructure:"pdf_url"`                         // pdf 的 url ，两个小时有效期
-	PdfUrlExpireTime int    `json:"pdf_url_expire_time" mapstructure:"pdf_url_expire_time"` // pdf_url 过期时间， 7200 秒
+	PdfUrlExpireTime int64  `json:"pdf_url_expire_time" mapstructure:"pdf_url_expire_time"` // pdf_url 过期时间， 7200 秒
 }
 
 // 将电子发票卡券插入用户卡包
 type InsertInvoiceToUserCardReqCardInfo struct {
 	Name  string `json:"name" mapstructure:"name"`   // 是 项目的名称
-	Num   int    `json:"num" mapstructure:"num"`     // 否 项目的数量
+	Num   int64  `json:"num" mapstructure:"num"`     // 否 项目的数量
 	Unit  string `json:"unit" mapstructure:"unit"`   // 否 项目的单位，如个
-	Price int    `json:"price" mapstructure:"price"` // 是 项目的单价
+	Price int64  `json:"price" mapstructure:"price"` // 是 项目的单价
 }
 type InsertInvoiceToUserCardReqUserCard struct {
-	Fee                   int                                  `json:"fee" mapstructure:"fee"`                                           // 发票的金额，以分为单位
+	Fee                   int64                                `json:"fee" mapstructure:"fee"`                                           // 发票的金额，以分为单位
 	Title                 string                               `json:"title" mapstructure:"title"`                                       // 发票的抬头
-	BillingTime           int                                  `json:"billing_time" mapstructure:"billing_time"`                         // 发票的开票时间，为10位时间戳（utc+8）
+	BillingTime           int64                                `json:"billing_time" mapstructure:"billing_time"`                         // 发票的开票时间，为10位时间戳（utc+8）
 	BillingNo             string                               `json:"billing_no" mapstructure:"billing_no"`                             // 发票的发票号码；数电发票传20位发票号码
 	BillingCode           string                               `json:"billing_code" mapstructure:"billing_code"`                         // 发票的发票代码；数电发票发票代码为空
 	Info                  []InsertInvoiceToUserCardReqCardInfo `json:"info" mapstructure:"info"`                                         // 商品详情结构，见下方
-	FeeWithoutTax         int                                  `json:"fee_without_tax" mapstructure:"fee_without_tax"`                   // 不含税金额，以分为单位
-	Tax                   int                                  `json:"tax" mapstructure:"tax"`                                           // 税额，以分为单位
+	FeeWithoutTax         int64                                `json:"fee_without_tax" mapstructure:"fee_without_tax"`                   // 不含税金额，以分为单位
+	Tax                   int64                                `json:"tax" mapstructure:"tax"`                                           // 税额，以分为单位
 	SPdfMediaId           string                               `json:"s_pdf_media_id" mapstructure:"s_pdf_media_id"`                     // 发票pdf文件上传到微信发票平台后，会生成一个发票s_media_id，该s_media_id可以直接用于关联发票PDF和发票卡券。发票上传参考“ 3 上传PDF ”一节
 	STripPdfMediaId       string                               `json:"s_trip_pdf_media_id" mapstructure:"s_trip_pdf_media_id"`           // 其它消费附件的PDF，如行程单、水单等，PDF上传方式参考“ 3 上传PDF ”一节
 	CheckCode             string                               `json:"check_code" mapstructure:"check_code"`                             // 校验码，发票pdf右上角，开票日期下的校验码；数电发票发票校验码为空

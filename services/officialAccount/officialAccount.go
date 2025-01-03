@@ -80,7 +80,7 @@ func SetMerchantContact(accessToken string, req officialAccountModel.SetMerchant
 //   - res: 响应数据
 //   - err: error
 func QueryMerchantContact(accessToken string) (res *officialAccountModel.QueryMerchantContactRes, err error) {
-	url := BASE_URL + "/card/invoice/setbizattr?action=set_contact&access_token=" + accessToken
+	url := BASE_URL + "/card/invoice/setbizattr?action=get_contact&access_token=" + accessToken
 	method := http.MethodPost
 	headers := make(map[string]string)
 	params := make(map[string]string)
@@ -97,7 +97,7 @@ func QueryMerchantContact(accessToken string) (res *officialAccountModel.QueryMe
 	return res, nil
 }
 
-// GetTicket 获取授权页 ticket
+// GetAuthTicket 获取授权页 ticket
 //
 // 参数：
 //   - accessToken: access_token
@@ -105,13 +105,13 @@ func QueryMerchantContact(accessToken string) (res *officialAccountModel.QueryMe
 // 返回值：
 //   - res: 响应数据
 //   - err: error
-func GetTicket(accessToken string) (res *officialAccountModel.GetTicketRes, err error) {
+func GetAuthTicket(accessToken string) (res *officialAccountModel.GetAuthTicketRes, err error) {
 	url := BASE_URL + "/cgi-bin/ticket/getticket?type=wx_card&access_token=" + accessToken
 	method := http.MethodGet
 	headers := make(map[string]string)
 	params := make(map[string]string)
 	data := make(map[string]interface{})
-	res, err = requestutils.HttpRequest[officialAccountModel.GetTicketRes](url,
+	res, err = requestutils.HttpRequest[officialAccountModel.GetAuthTicketRes](url,
 		method,
 		headers,
 		params,

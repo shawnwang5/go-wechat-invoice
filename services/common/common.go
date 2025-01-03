@@ -23,11 +23,16 @@ const (
 //   - res: 响应数据
 //   - err: error
 func GetAccessToken(appId, appSecret string) (res *commonModel.GetAccessTokenRes, err error) {
-	url := fmt.Sprintf(`%s/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s`, BASE_URL, appId, appSecret)
-	method := http.MethodGet
+	// url := fmt.Sprintf(`%s/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s`, BASE_URL, appId, appSecret)
+	url := fmt.Sprintf(`%s/cgi-bin/stable_token`, BASE_URL)
+	method := http.MethodPost
 	headers := make(map[string]string)
 	params := make(map[string]string)
 	data := make(map[string]interface{})
+	data["grant_type"] = "client_credential"
+	data["appid"] = appId
+	data["secret"] = appSecret
+	data["force_refresh"] = false
 	res, err = requestutils.HttpRequest[commonModel.GetAccessTokenRes](url,
 		method,
 		headers,
