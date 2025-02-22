@@ -32,7 +32,7 @@ func GetAccessToken(appId, appSecret string) (res *commonModel.GetAccessTokenRes
 	data["grant_type"] = "client_credential"
 	data["appid"] = appId
 	data["secret"] = appSecret
-	data["force_refresh"] = false
+	data["force_refresh"] = true // 是否强制刷新
 	res, err = requestutils.HttpRequest[commonModel.GetAccessTokenRes](url,
 		method,
 		headers,
