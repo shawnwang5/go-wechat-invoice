@@ -29,10 +29,10 @@ func GetAccessToken(appId, appSecret string) (res *commonModel.GetAccessTokenRes
 	headers := make(map[string]string)
 	params := make(map[string]string)
 	data := make(map[string]interface{})
-	data["grant_type"] = "client_credential"
-	data["appid"] = appId
-	data["secret"] = appSecret
-	data["force_refresh"] = true // 是否强制刷新
+	data["grant_type"] = "client_credential" // 授权类型，固定值
+	data["appid"] = appId                    // 应用 id
+	data["secret"] = appSecret               // 应用 secret
+	data["force_refresh"] = false            // 是否强制刷新
 	res, err = requestutils.HttpRequest[commonModel.GetAccessTokenRes](url,
 		method,
 		headers,
@@ -42,6 +42,5 @@ func GetAccessToken(appId, appSecret string) (res *commonModel.GetAccessTokenRes
 	if err != nil {
 		return nil, err
 	}
-
 	return res, nil
 }
